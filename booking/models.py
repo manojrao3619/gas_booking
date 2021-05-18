@@ -7,8 +7,8 @@ class Booking(models.Model):
 	date          = models.DateField(null = True)
 	time          = models.TimeField(null = True)
 	status        = models.CharField(null = True ,max_length = 20)
-	test = models.DateTimeField(null = True)
+	# test = models.DateTimeField(null = True)
 
 	def __str__(self):
-		return self.test.year
+		return self.consumer_no
 
