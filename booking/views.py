@@ -46,7 +46,7 @@ def bookingHistory(request):
 		consumer = request.GET.get("consumer")
 		try:
 			bookings = Booking.objects.filter(consumer_no = consumer)
-			history =  serializers.serialize('json', bookings, fields=('model', 'pk'))
+			history =  serializers.serialize('json', bookings, fields=('date', 'time', 'status'))
 			return HttpResponse(history, content_type="text/json-comment-filtered")
 		except:
 			return JsonResponse({'Error': 'User not found'}, status = status.HTTP_400_BAD_REQUEST)
