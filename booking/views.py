@@ -1,8 +1,9 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
+from django.core import serializers
  
 from .models import Booking
 from .serializers import BookingSerializer
@@ -42,10 +43,11 @@ def cancelBooking(request):
 @api_view(['GET'])
 def bookingHistory(request):
 	if request.method == 'GET':
-		consumer = request.GET.get("param1")
+		consumer = request.GET.get("consumer")
 		try:
-			bookings = Booking.objects.get(consumer_no = consumer)
-			return JsonResponse({'history': bookings})
+			bookings = Booking.objects.filter(consumer_no = consumer)
+			history =  serializers.serialize('json', bookings)
+			return HttpResponse(history, content_type="text/json-comment-filtered")
 		except:
 			return JsonResponse({'Error': 'User not found'}, status = status.HTTP_400_BAD_REQUEST)
 						
