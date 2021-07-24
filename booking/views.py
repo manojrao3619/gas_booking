@@ -40,8 +40,9 @@ def cancelBooking(request):
 			return JsonResponse({'Error': 'User not found'}, status = status.HTTP_400_BAD_REQUEST)
 		
 @api_view(['GET'])
-def bookingHistory(request, consumer):
+def bookingHistory(request):
 	if request.method == 'GET':
+		consumer = request.GET.get("param1")
 		try:
 			bookings = Booking.objects.get(consumer_no = consumer)
 			return JsonResponse({'history': bookings})
