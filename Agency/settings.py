@@ -163,7 +163,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL')
-EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
+EMAIL_HOST_USER = 'manoja.rao9@gmail.com'
+EMAIL_HOST_PASSWORD = 'H@nd1r@0'
 
 
