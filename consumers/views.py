@@ -23,7 +23,7 @@ def consumer_view(request):
             user = authenticate(request, username=consumer_data["consumer_name"],
                                 password=consumer_data["password"])
             if user is not None:
-                return  JsonResponse({'Authentication': 'success'})
+                return  JsonResponse({'Authentication': 'success', 'consumer_no': user.profile.consumer_no, 'email': user.profile.email, 'phone': user.profile.phone_no})
             else:
                 return JsonResponse({'Authentication': 'fail'}, status=status.HTTP_400_BAD_REQUEST)
 
