@@ -38,5 +38,5 @@ def consumer_view(request):
             subject = "Welcome to Gas Booking"
             message = consumer_data["consumer_name"] + " Your Account has been Created.Thanks for Using our product"
             recipent = consumer_data["email"]
-#             send_mail(subject, message, EMAIL_HOST_USER, [recipent], fail_silently=False)
+            send_mail(subject, message, EMAIL_HOST_USER, [recipent], fail_silently=False)
             return JsonResponse({'Registration': 'success'})
