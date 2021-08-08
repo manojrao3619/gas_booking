@@ -38,7 +38,7 @@ def cancelBooking(request):
 			booking.save()
 			return JsonResponse({'Status': booking.status}, status = status.HTTP_201_CREATED)
 		except:
-			return JsonResponse({'Error': 'User not found'}, status = status.HTTP_400_BAD_REQUEST)
+			return JsonResponse({'error': 'User not found'}, status = status.HTTP_400_BAD_REQUEST)
 		
 @api_view(['GET'])
 def bookingHistory(request):
