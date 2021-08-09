@@ -14,7 +14,14 @@ import datetime
 def booking(request):
 	if request.method == 'POST':
 		booking_serializer = BookingSerializer(data=request.data)
+		
+		
+		
 		if booking_serializer.is_valid():
+			booking = Booking.objects.filter(consumer_no = booking_serializer.data['consumer_no']).latest('time')
+			if booking.status == "Booked":
+				return JsonResponse({'consumer_no' : booking.consumer_no, 'status': "Already booked"})
+			   
 			booking = Booking.objects.create(consumer_name = booking_serializer.data['consumer_name'], 
  											 consumer_no   = booking_serializer.data['consumer_no'],
  											 phone_no      = booking_serializer.data['phone_no'],
@@ -31,7 +38,7 @@ def cancelBooking(request):
 	if request.method == 'POST':
 		booking_data = JSONParser().parse(request)
 		try:
-			booking = Booking.objects.get(consumer_no = booking_data['consumer_no'])
+			booking = Booking.objects.filter(consumer_no = booking_data['consumer_no']).latest('time')
 			if booking.status == 'Cancelled':
 				return JsonResponse({'error': 'Booking already cancelled'}, status = status.HTTP_400_BAD_REQUEST)
 			booking.status = 'Cancelled'
