@@ -18,19 +18,21 @@ def booking(request):
 		
 		
 		if booking_serializer.is_valid():
-			booking = Booking.objects.filter(consumer_no = booking_serializer.data['consumer_no']).latest('time')
-			if booking.status == "Booked":
-				return JsonResponse({'consumer_no' : booking.consumer_no, 'status': "Already booked"})
-			   
-			booking = Booking.objects.create(consumer_name = booking_serializer.data['consumer_name'], 
+			try:
+				booking = Booking.objects.filter(consumer_no = booking_serializer.data['consumer_no']).latest('time')
+				if booking.status == "Booked":
+					return JsonResponse({'consumer_no' : booking.consumer_no, 'status': "Already booked"})
+			
+			except:
+				booking = Booking.objects.create(consumer_name = booking_serializer.data['consumer_name'], 
  											 consumer_no   = booking_serializer.data['consumer_no'],
  											 phone_no      = booking_serializer.data['phone_no'],
  											 date   = datetime.datetime.now().strftime("%Y-%m-%d"),
  											 time   = datetime.datetime.now().strftime("%H:%M:%S"),
  											 status = "Booked"
-				    )
-			booking.save()
-			return JsonResponse({'consumer_no' : booking.consumer_no, 'status': booking.status}, status=status.HTTP_201_CREATED) 
+				    	)
+				booking.save()
+				return JsonResponse({'consumer_no' : booking.consumer_no, 'status': booking.status}, status=status.HTTP_201_CREATED) 
 		return JsonResponse(booking_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
